@@ -8,7 +8,7 @@ export default defineConfig({
         ? {
             sandbox: "sandbox allow-scripts; script-src 'self' 'unsafe-eval';",
           }
-        : undefined;
+        : "script-src 'self' 'unsafe-eval'; object-src 'self';";
 
     return {
       content_security_policy: contentSecurityPolicy,
