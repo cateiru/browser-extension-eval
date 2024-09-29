@@ -1,33 +1,50 @@
-import { useState } from 'react';
-import reactLogo from '@/assets/react.svg';
-import wxtLogo from '/wxt.svg';
-import './App.css';
+import React from "react";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const iframeRef = React.useRef<HTMLIFrameElement>(null);
+  const [text, setText] = React.useState("");
+  const [result, setResult] = React.useState("");
+
+  React.useEffect(() => {
+    const listener = (event: MessageEvent) => {
+      const data = event.data;
+      if (data.type !== "sandbox-eval-result") {
+        return;
+      }
+
+      setResult(data.result);
+    };
+
+    window.addEventListener("message", listener);
+    return () => {
+      window.removeEventListener("message", listener);
+    };
+  }, []);
+
+  const handleClick = () => {
+    const iframe = iframeRef.current;
+    if (!iframe) {
+      return;
+    }
+
+    iframe.contentWindow?.postMessage(
+      {
+        type: "sandbox-eval",
+        code: text,
+        args: undefined,
+      },
+      "*"
+    );
+  };
 
   return (
     <>
-      <div>
-        <a href="https://wxt.dev" target="_blank">
-          <img src={wxtLogo} className="logo" alt="WXT logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>WXT + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the WXT and React logos to learn more
-      </p>
+      <iframe src="./sandbox.html" ref={iframeRef} />
+
+      <textarea value={text} onChange={(e) => setText(e.target.value)} />
+      <button onClick={handleClick}>Run Eval</button>
+
+      <p>{result}</p>
     </>
   );
 }
