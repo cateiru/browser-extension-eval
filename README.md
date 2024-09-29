@@ -1,6 +1,6 @@
 # Sample of eval for manifest v2 and v3
 
-This repository is an example of how to run eval on an extension created using the [WXT](https://wxt.dev/) framework.
+This repository is an example of how to run eval on a browser extension created using the [WXT](https://wxt.dev/) framework.
 
 Eval normally requires `content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self';"`[^1].
 
@@ -12,16 +12,16 @@ WXT allows you to separate settings for each manifest version in [`wxt.config.ts
 
 ```ts
 manifest: (config) => {
-const contentSecurityPolicy =
-    config.manifestVersion === 3
-    ? {
-        sandbox: "sandbox allow-scripts; script-src 'self' 'unsafe-eval';",
-        }
-    : "script-src 'self' 'unsafe-eval'; object-src 'self';";
+    const contentSecurityPolicy =
+        config.manifestVersion === 3
+        ? {
+            sandbox: "sandbox allow-scripts; script-src 'self' 'unsafe-eval';",
+            }
+        : "script-src 'self' 'unsafe-eval'; object-src 'self';";
 
-return {
-    content_security_policy: contentSecurityPolicy,
-};
+    return {
+        content_security_policy: contentSecurityPolicy,
+    };
 },
 ```
 
