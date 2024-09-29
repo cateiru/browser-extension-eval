@@ -4,7 +4,7 @@ This repository is an example of how to run eval on a browser extension created 
 
 Eval normally requires `content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self';"`[^1].
 
-Also, manifest v3 requires that you run in a sandbox, which is not supported in v2.
+Also, manifest v3 requires that you run in a sandbox, which is not supported in v2[^2].
 
 ## Structure
 
@@ -36,7 +36,6 @@ and the sandbox iframes are also displayed differently depending on the manifest
 ## LICENSE
 
 [MIT](./LICENSE)
-
 
 [^1]: [content_security_policy - Mozilla | MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/content_security_policy)
 [^2]: [Use eval() in sandboxed iframes  |  Chrome Extensions  |  Chrome for Developers](https://developer.chrome.com/docs/extensions/how-to/security/sandboxing-eval)
