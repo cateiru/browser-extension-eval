@@ -1,8 +1,10 @@
 import React from "react";
-import { parse } from "./parser";
+import { parse } from "../lib/parser";
 
 export const App = () => {
   React.useEffect(() => {
+    // postMessage で受け取ったコードを実行し、結果を返す
+    // sandbox ページは iframe で埋め込まれる予定
     const listener = (event: MessageEvent) => {
       const data = event.data;
       if (data.type !== "sandbox-eval") {

@@ -37,12 +37,6 @@ function App() {
     );
   };
 
-  const handleOptionClick = () => {
-    if (browser.runtime.openOptionsPage) {
-      browser.runtime.openOptionsPage();
-    }
-  };
-
   return (
     <>
       <iframe src="./sandbox.html" ref={iframeRef} />
@@ -51,8 +45,6 @@ function App() {
       <button onClick={handleClick}>Run Eval</button>
 
       <p>{result}</p>
-
-      <button onClick={handleOptionClick}>Go to Options</button>
     </>
   );
 }
